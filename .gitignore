@@ -1,0 +1,6 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+.gradle/7.5.1/checksums/checksums.lock

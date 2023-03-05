@@ -1,5 +1,9 @@
 package FloydWarshalls;
 
+import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import Dijkstra.DiEdge;
 import Dijkstra.EWDiGraph;
 
@@ -40,10 +44,17 @@ public class FloydWConcurrent extends FloydW {
 
         var v = new int[] {0, 1, 2, 3, 4, 5, 6};
         var dm = genDistanceMatrix(ewd);
+        var chunkSize = (int)Math.max((v.length / threads), 1);
 
-        for (var i = 0; i < (threads <= v.length ? threads : v.length); i++) {
-            var c = // split into x chunks, one for each thread, then done
-            floydW(v, c, dm);
+        var executor = Executors.newFixedThreadPool(threads);
+
+        for (var i = 0; i < v.length; i += chunkSize) {
+            var c = Arrays.copyOfRange(v, i, Math.min(i + chunkSize, v.length - 1));
+            executor.execute(() -> {
+                floydW(v, c, dm);
+            });
         }
+
+        var b = dm;
     }
 }
