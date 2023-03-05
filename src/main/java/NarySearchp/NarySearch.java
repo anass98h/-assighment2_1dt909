@@ -11,7 +11,7 @@ public class NarySearch {
         int pos = -1;
         locate[0] = 'R';
         locate[intv + 1] = 'L';
-        while (lo <= hi && pos == Integer.MIN_VALUE) {
+        while (lo <= hi && pos == -1) {
             mid[0] = lo -1;
             int step = (int) Math.floor( (hi - lo + 1)/(intv + 1));
             pos = markLoc(A, mid, locate, lo, hi, step, intv, key,pos);
