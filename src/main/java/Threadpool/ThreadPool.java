@@ -48,7 +48,7 @@ public class ThreadPool {
         exit[0] = true;
     }
 
-    public <T, C extends Callable<T>> Future<T> queueWork(C cb) {
+    public <T, C extends Callable<T>> CompletableFuture<T> queueWork(C cb) {
         var iter = 0;
         Optional<InterruptedException> oiex = null;
         while (iter < max_tries) {
