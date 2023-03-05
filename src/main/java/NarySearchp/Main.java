@@ -9,7 +9,7 @@ public class Main {
             int key = 8;
             int lo = 0;
             int hi = arr.length - 1;
-            int intv = 3;
+            int intv = 1;
 
             int result = NarySearch.nary(arr, lo, hi, key, intv);
             if (result == -1) {
