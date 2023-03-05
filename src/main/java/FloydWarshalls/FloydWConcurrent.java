@@ -25,12 +25,7 @@ public class FloydWConcurrent extends FloydW {
         return dm;
     }
 
-    @Override
     public void start() {
-        start(8);
-    }
-
-    public void start(int threads) {
         EWDiGraph ewd = new EWDiGraph(8);
         ewd.addEdge(new DiEdge(0, 5, 0.34));
         ewd.addEdge(new DiEdge(5, 3, 0.34));
@@ -43,6 +38,10 @@ public class FloydWConcurrent extends FloydW {
         ewd.addEdge(new DiEdge(0, 1, 0.34));
 
         var v = new int[] {0, 1, 2, 3, 4, 5, 6};
+        start(8, ewd, v);
+    }
+
+    public double[][] start(int threads, EWDiGraph ewd, int[] v) {
         var dm = genDistanceMatrix(ewd);
         var chunkSize = (int)Math.max((v.length / threads), 1);
 
@@ -55,6 +54,6 @@ public class FloydWConcurrent extends FloydW {
             });
         }
 
-        var b = dm;
+        return dm;
     }
 }
