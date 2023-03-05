@@ -25,7 +25,10 @@ public class ThreadPool {
                         var fcb = queue.take();
                         fcb.call();
                     } catch (Exception e) {
-                        throw new RuntimeException("Exception when calling future callable callback: \n" + e.getMessage()); 
+                        if (!(e instanceof InterruptedException) && e != null) {
+                            System.out.println("Exception when calling future callable callback: \n");
+                            e.printStackTrace();
+                        } 
                     }
                 }
             });
@@ -45,7 +48,10 @@ public class ThreadPool {
     }
 
     public void stop() {
-        exit[0] = true;
+        exit[0] = true; // set while loop exit condition
+        for (var thread : pool) {
+            thread.interrupt(); // interrupt sleepwaiting on queue.take()
+        } // threads will now reach the exit condition
     }
 
     public <T, C extends Callable<T>> CompletableFuture<T> queueWork(C cb) {
@@ -66,6 +72,6 @@ public class ThreadPool {
 
     protected void finalize() throws Throwable {
         System.out.println("blue was not the impostor");
-        stop();
+        stop(); // to be safe in case the threads parent class goes out of scope and gets gc:d
     }
 }
