@@ -1,8 +1,5 @@
 package NarySearchp;
 
-
-import static java.lang.Math.floor;
-
 public class NarySearch {
 
     public static int nary(int[] A, int lo, int hi, int key, int intv) {
@@ -11,10 +8,10 @@ public class NarySearch {
         int pos = -1;
         locate[0] = 'R';
         locate[intv + 1] = 'L';
-        while (lo <= hi && pos == Integer.MIN_VALUE) {
+        while (lo <= hi && pos == -1) {
             mid[0] = lo -1;
             int step = (int) Math.floor( (hi - lo + 1)/(intv + 1));
-            markLoc(A, mid, locate, lo, hi, step, intv, key,pos);
+            pos = markLoc(A, mid, locate, lo, hi, step, intv, key, pos);
             for (int i = 1; i <= intv; i++) {
                 if (locate[i] != locate[i - 1]) {
                     lo = mid[i - 1] + 1;
@@ -28,7 +25,7 @@ public class NarySearch {
         return pos;
     }
 
-    private static int markLoc(int[] A, int[] mid, char[] locate, int lo, int hi, int step, int intv, int key,int pos) {
+    private static int markLoc(int[] A, int[] mid, char[] locate, int lo, int hi, int step, int intv, int key, int pos) {
         for (int i = 1; i <= intv; i++) {
             int offs = step * i + (i - 1);
             mid[i] = lo + offs;
