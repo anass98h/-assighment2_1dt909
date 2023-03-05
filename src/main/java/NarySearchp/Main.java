@@ -4,22 +4,14 @@ package NarySearchp;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            int[] arr = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
-            int key = 8;
-            int lo = 0;
-            int hi = arr.length - 1;
-            int intv = 4;
+        int[] A = {1, 2, 3, 4, 5, 8, 10, 21, 26, 29, 35, 38, 39};
+        int lo = 0;
+        int hi = A.length - 1;
+        int key = 4;
+        int intv = 2;
+        int numThreads = 4;
 
-            int result = NarySearch.nary(arr, lo, hi, key, intv);
-            if (result == -1) {
-                System.out.println("Key not found in the array.");
-            } else {
-                System.out.println("Key found at index " + result + " in the array.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int pos = NarySearch.nary(A, lo, hi, key, intv,numThreads);
+        System.out.println("Position of key: " + pos);
     }
-
 }

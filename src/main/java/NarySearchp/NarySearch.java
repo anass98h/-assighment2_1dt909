@@ -1,9 +1,40 @@
 package NarySearchp;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import static java.lang.Math.floor;
 
 public class NarySearch {
+
+    public static int nary(int[] A, int lo, int hi, int key, int intv, int numThreads) {
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+        List<Future<Integer>> futures = new ArrayList<>();
+        int step = (hi - lo + 1) / numThreads;
+        for (int i = 0; i < numThreads; i++) {
+            int start = lo + i * step;
+            int end = (i == numThreads - 1) ? hi : start + step - 1;
+            futures.add(executor.submit(() -> nary(A, start, end, key,intv)));
+        }
+        try {
+            for (Future<Integer> future : futures) {
+                Integer result = future.get();
+                if (result != -1) {
+                    executor.shutdown();
+                    return result;
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        executor.shutdown();
+        return -1;
+    }
 
     public static int nary(int[] A, int lo, int hi, int key, int intv) {
         int[] mid = new int[intv + 1];
