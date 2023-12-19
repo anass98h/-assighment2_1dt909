@@ -4,7 +4,7 @@ import Dijkstra.DiEdge;
 import Dijkstra.EWDiGraph;
 
 public class FloydW {
-    protected double[][] genDistanceMatrix(EWDiGraph g) {
+    public double[][] genDistanceMatrix(EWDiGraph g) {
         var dm = new double[g.V()][g.V()];
         for (var i = 0; i < dm.length; i++) {
             for (var j = 0; j < dm.length; j++) {

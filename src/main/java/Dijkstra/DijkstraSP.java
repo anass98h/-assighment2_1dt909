@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class DijkstraSP {
-    private DiEdge[] edgeTo;
-    private double[] distTo;
-    private PriorityQueue<Integer> pq;
+    public DiEdge[] edgeTo;
+    public double[] distTo;
+    public PriorityQueue<Integer> pq;
 
     public DijkstraSP(EWDiGraph G, int s) {
         edgeTo = new DiEdge[G.V()];
